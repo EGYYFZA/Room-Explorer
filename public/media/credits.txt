@@ -1,0 +1,14 @@
+SELA HOUSE — IMAGE CREDITS
+
+All photography is illustrative. Sela House, its rooms, amenities and prices are fictional.
+Photos sourced from Unsplash (https://unsplash.com/license); no affiliation with depicted properties.
+
+retreat.jpg: https://images.unsplash.com/photo-1571896349842-33c89424de2d
+garden.jpg: https://images.unsplash.com/photo-1611892440504-42a792e24d32
+canopy.jpg: https://images.unsplash.com/photo-1618773928121-c32242e63f39
+pool.jpg: https://images.unsplash.com/photo-1613490493576-7fde63acd811
+breakfast.jpg: https://images.unsplash.com/photo-1533089860892-a7c6f0a88666
+ubud.jpg: https://images.unsplash.com/photo-1537996194471-e657df975ab4
+
+Layout inspiration: https://www.artestates.co/
+Original Sela House visual identity, copy and implementation created for this practice project.
