@@ -1,4 +1,11 @@
 import './globals.css';
+import './journey.css';
+import './room.css';
+import './horizontal.css';
+import './refinements.css';
+import './polish.css';
+import './motion.css';
+import PageTransitions from '../components/PageTransitions';
 
 export const metadata = {
   title: 'Sela House — A little closer to quiet',
@@ -6,5 +13,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="en"><body>{children}</body></html>;
+  return <html lang="en"><body>{children}<PageTransitions /></body></html>;
 }

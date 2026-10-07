@@ -41,8 +41,8 @@ Ponytail dicari melalui direktori plugin dan file lokal, tetapi tidak ditemukan.
 Hasil verifikasi aktual:
 
 - `npm.cmd run build` berhasil: halaman Next.js diekspor menjadi halaman statis dan `index.html` langsung.
-- `npm.cmd test`: **4 pengujian browser lulus**. Filter/favorit, detail kamar, galeri dan keyboard, perubahan pengalaman, tanggal yang tidak valid, kapasitas kamar, dan total menginap diperiksa pada Next.js serta HTML langsung.
-- Layout desktop 1440 px dan ponsel 390 px diperiksa; tidak ada overflow horizontal. Screenshot hasil pengujian telah ditinjau.
+- `npm.cmd test`: **9 pengujian browser lulus** (6 skenario beranda dan 3 skenario halaman detail). Filter/favorit, detail kamar, galeri dan keyboard, perubahan pengalaman, tanggal yang tidak valid, kapasitas kamar, dan total menginap diperiksa pada Next.js serta HTML langsung.
+- Layout beranda desktop 1440 px dan ponsel 390 px, serta detail kamar 320, 390, 768, dan 1280 px diperiksa; tidak ada overflow horizontal. Screenshot hasil pengujian telah ditinjau.
 - Semua gambar utama diperiksa berhasil dimuat dari aset lokal.
 - Chrome dibuka ke `index.html`, dan folder proyek dibuka di VS Code. Kontrol UI desktop langsung tidak tersambung; pemeriksaan visual dilakukan melalui screenshot Chrome pengujian otomatis.
 - Sintaks skrip ekspor, preview, dan adapter HTML lulus pemeriksaan Node.
@@ -59,3 +59,49 @@ Desain yang baik membutuhkan lebih dari gambar yang menarik: isi harus terbaca, 
 Dengan bahasa saya sendiri, commit seperti memotret keadaan proyek dan memberi nama pada foto itu. Sesudah membuat perubahan lain, saya masih bisa membandingkan keadaan baru dengan titik simpan tersebut. Commit juga menjelaskan tujuan perubahan kepada orang lain yang membaca riwayat Git.
 
 Langkah belajar berikutnya: jalankan halaman, coba semua tombol, ubah satu warna atau harga di sumbernya, bangun ulang, lalu bandingkan perubahan sebelum membuat commit berikutnya.
+
+## Pengembangan tampilan lanjutan
+
+Beranda sekarang menggunakan lima bab horizontal dengan scroll halus, navigasi bab, parallax, dukungan keyboard, serta pengurangan animasi sesuai preferensi perangkat. Ponsel menggunakan alur vertikal.
+
+Setiap kamar memiliki halaman sendiri: `/rooms/garden/`, `/rooms/canopy/`, dan `/rooms/pool/`. Detail memuat galeri foto yang dapat diperbesar, cerita kamar, fasilitas, FAQ, simulasi biaya berdasarkan tanggal dan kapasitas, serta tautan kamar lainnya. Tiga belas foto lokal digunakan; sumbernya tercatat di `public/media/credits.txt`. Semua properti dalam foto adalah ilustrasi dari beberapa sumber.
+
+Build berhasil, keenam pengujian beranda lulus, dan ketiga pengujian detail lulus setelah selector skrip pengujian disesuaikan. Versi Next.js dan HTML langsung sama-sama diuji. Halaman kamar yang tidak dikenal memberikan respons 404.
+
+Commit halaman pertama tetap tersimpan sebagai `4486e11 feat: create initial hotel page`. Pengembangan horizontal dan halaman detail terbaru masih merupakan perubahan lokal yang belum disimpan dalam commit tambahan.
+
+## Penyempurnaan visual tanpa navbar dan footer
+
+Beranda kini memakai foto hotel yang memenuhi layar, tipografi serif, dan satu ikon menu mengambang. Navbar, footer, serta bar navigasi bawah dihapus dari beranda dan halaman kamar. Menu layar penuh menyediakan navigasi bab dan perencana menginap.
+
+Scroll horizontal tetap halus dengan parallax gambar dan kemunculan teks bertahap. Perpindahan halaman memakai efek tirai; preferensi reduced motion mematikan animasi. Pengujian juga memeriksa tombol Back agar transisi tidak menutupi halaman setelah kembali.
+
+Build berhasil, sembilan pengujian browser lulus, serta pemeriksaan navigasi dan Back lulus pada Next.js dan HTML langsung. Screenshot desktop, laptop 720 px, dan ponsel ditinjau untuk memastikan konten terbaca dan muat.
+
+## Horizontal pada seluruh halaman dan ukuran layar
+
+Beranda dan ketiga halaman kamar kini menggunakan viewport horizontal native pada semua ukuran layar. Swipe ponsel, roda mouse, trackpad, keyboard, menu, serta tautan ke galeri dan formulir tetap bekerja. Bagian dengan banyak kartu atau foto memanjang ke samping. Seluruh elemen journey-rail beserta indikator dan navigasinya dihapus dari sumber dan HTML hasil build.
+
+Build berhasil. Sebelas pengujian browser mencakup interaksi hotel, semua rute pada empat ukuran layar, swipe sentuh, galeri, simulasi menginap, dan HTML langsung. Konten pada jendela sangat pendek tetap dapat dibaca melalui area formulir di dalam panel.
+
+## Revisi splash, menu, dan popup
+
+Tombol panah bulat di hero dihapus. Gradasi tipis melembutkan pertemuan slide; bagian kamar memakai putih hangat dengan teks hijau gelap. Splash berlangsung 2,8 detik dan menahan posisi di Arrival agar reload tidak membawa pengunjung ke slide berikutnya. Tautan langsung ke bab tetap berfungsi.
+
+Menu meluas dari ikon selama 1,25 detik, menampilkan teks bertahap, lalu mengecil saat ditutup. Popup kamar memiliki foto besar, fasilitas dalam kartu, harga, dan tombol yang lebih jelas. Perencana menginap menampilkan foto sesuai kamar yang dipilih, sedangkan galeri memakai bingkai gelap dan kontrol yang lebih rapi. Semua popup menyesuaikan layar kecil dan dapat ditutup dengan Escape. Preferensi reduced motion mematikan animasi.
+
+Build berhasil dan 14 pengujian browser lulus. Pengujian baru memeriksa scroll yang tertahan saat splash, reload kembali ke Arrival, durasi menu, pemulihan fokus setelah Escape, serta ukuran popup dan pergantian foto pada layar 320, 390, dan 1440 px di Next.js maupun HTML langsung. Screenshot splash, menu, batas slide, galeri, dan popup ditinjau. Kolom tanggal pada layar terkecil ditata vertikal untuk mencegah konten melebar.
+
+## Logo bersama dan navbar transparan
+
+Logo beserta tagline memakai satu komponen BrandMark di navbar dan splash. Navbar transparan menempatkan logo dan ikon menu sejajar, tetap di viewport saat scroll horizontal, dan menyesuaikan warna pada bagian terang. Label lama SELA HOUSE / BALI dihapus.
+
+Jarak konten dari navbar, proporsi foto, galeri, kartu kamar terkait, dan formulir diperbaiki per ukuran layar. Teks bergerak sedikit saat mouse masuk, kartu terangkat, foto mendapat zoom atau sorotan lembut, dan ikon fasilitas berputar sedikit. Efek hover hanya aktif untuk mouse dan tetap menghormati reduced motion.
+
+Build serta 14 pengujian browser berhasil, dilanjutkan tiga pemeriksaan responsivitas dan swipe setelah tinggi foto disesuaikan. Hover pada judul di 26 section dan reduced motion diperiksa langsung di Chrome tanpa error browser. Tinjauan visual mencakup desktop, tablet, ponsel, dan jendela pendek.
+
+## Animasi kemunculan seluruh section
+
+Judul hero kini muncul dari bawah per baris dengan jeda bertahap setelah splash selesai, termasuk di ponsel. Observer viewport memulai animasi ketika judul, teks, kartu, fasilitas, formulir, dan foto benar-benar masuk layar. Efek berulang setelah konten keluar dan masuk lagi, sehingga perpindahan kembali ke section tetap terasa hidup. Foto mendapat zoom lembut yang terpisah dari parallax dan hover.
+
+Mesin animasi dipakai bersama oleh Next.js dan HTML langsung. Kartu yang muncul setelah perubahan filter ikut dianimasikan. Fokus keyboard langsung memperlihatkan kontrol, klik mouse tetap stabil, dan reduced motion menampilkan konten tanpa gerakan. Tiga pengujian khusus animasi lulus, mencakup urutan hero setelah splash, seluruh 26 section, filter, fokus, dan perubahan preferensi animasi.

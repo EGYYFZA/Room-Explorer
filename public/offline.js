@@ -1,36 +1,38 @@
 // Direct-open companion. The main application uses React; this adapter keeps
 // the exported learning artifact interactive even under file://.
 (() => {
-  const { rooms, rituals } = window.SELA;
+  const { rooms, rituals, houseGallery } = window.SELA;
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
   const money = value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
   const media = file => `public/media/${file}`;
   const dialog = $('dialog');
+  const dismiss = () => window.closeSelaDialog(dialog);
   const saved = new Set();
   let filter = 'All rooms';
   let lastFocus;
   let galleryIndex = 0;
   let currentType;
-  const gallery = [{ image: 'retreat.jpg', caption: 'A softer pace, by the pool' }, ...rooms.map(r => ({ image: r.image, caption: r.name })), { image: 'ubud.jpg', caption: 'The green heart of Ubud' }];
+  const gallery = houseGallery;
   const arrow = '<span aria-hidden="true">↗</span>';
   const closeButton = '<button class="modal-close" aria-label="Close dialog">×</button>';
 
   function open(type, content) {
     if (!dialog.open) lastFocus = document.activeElement;
     currentType = type;
-    dialog.className = 'modal' + (type === 'gallery' ? ' gallery-modal' : type === 'menu' ? ' menu-modal' : '');
+    dialog.className = 'modal' + (type === 'gallery' ? ' gallery-modal' : type === 'menu' ? ' menu-modal' : type === 'room' ? ' room-modal' : type === 'stay' ? ' stay-modal' : '');
     dialog.innerHTML = closeButton + content;
-    $('.modal-close', dialog).onclick = () => dialog.close();
+    $('.modal-close', dialog).onclick = dismiss;
     if (!dialog.open) dialog.showModal();
     $('.modal-close', dialog).focus();
     document.body.style.overflow = 'hidden';
   }
+  dialog.addEventListener('cancel', e => { e.preventDefault(); dismiss(); });
   dialog.addEventListener('close', () => { document.body.style.overflow = ''; lastFocus?.focus(); });
   dialog.addEventListener('click', e => {
     if (e.target !== dialog) return;
     const b = dialog.getBoundingClientRect();
-    if (e.clientX < b.left || e.clientX > b.right || e.clientY < b.top || e.clientY > b.bottom) dialog.close();
+    if (e.clientX < b.left || e.clientX > b.right || e.clientY < b.top || e.clientY > b.bottom) dismiss();
   });
   dialog.addEventListener('keydown', e => {
     if (currentType !== 'gallery') return;
@@ -73,7 +75,7 @@
     $$('.image-open, .round-arrow', card).forEach(b => b.onclick = () => showRoom(room));
   });
   function showRoom(r) {
-    open('room', `<div class="room-detail"><img src="${media(r.image)}" alt="${r.name}"><div class="detail-copy"><p class="eyebrow">${r.type} / ${r.area} M² / UP TO ${r.guests} GUESTS</p><h2 id="modal-title">${r.name}</h2><p>${r.description}</p><ul>${r.amenities.map(a => `<li>${a}</li>`).join('')}</ul><div class="detail-bottom"><p><strong>${money(r.price)}</strong> / night</p><button class="pill-button">Choose this space ${arrow}</button></div></div></div>`);
+    open('room', `<div class="room-detail"><img src="${media(r.image)}" alt="${r.name}"><div class="detail-copy"><p class="eyebrow">${r.type} / ${r.area} M² / UP TO ${r.guests} GUESTS</p><h2 id="modal-title">${r.name}</h2><p>${r.description}</p><ul>${r.amenities.map(a => `<li>${a}</li>`).join('')}</ul><a class="underlined-link detail-page-link" href="room-pages/${r.id}.html">Explore the full room ${arrow}</a><div class="detail-bottom"><p><strong>${money(r.price)}</strong> / night</p><button class="pill-button">Choose this space ${arrow}</button></div></div></div>`);
     $('.pill-button', dialog).onclick = () => showStay(r.id);
   }
   function showGallery(step = 0) {
@@ -89,6 +91,7 @@
     const r = rituals[current];
     $('.ritual-image img').src = media(r.image);
     $('.ritual-image img').alt = r.title;
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) $('.ritual-image img').animate([{ opacity: .5, filter: 'blur(4px)' }, { opacity: 1, filter: 'blur(0)' }], { duration: 800, easing: 'ease-out' });
     $$('[data-ritual]').forEach(tab => {
       const index = Number(tab.dataset.ritual);
       tab.classList.toggle('active', index === current);
@@ -101,7 +104,7 @@
   function showStay(id = 'garden', values = {}) {
     const date = new Date();
     const today = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    open('stay', `<div class="stay-content"><p class="eyebrow">A LITTLE SOMETHING TO LOOK FORWARD TO</p><h2 id="modal-title">Make room for quiet.</h2><p class="stay-intro">Imagine your stay. Choose a space and see how it feels.</p><form><label>Your space<select name="room">${rooms.map(r => `<option value="${r.id}">${r.name} — ${money(r.price)} / night</option>`).join('')}</select></label><div class="date-fields"><label>Arrival<input type="date" name="arrival" min="${today}" required></label><label>Departure<input type="date" name="departure" min="${today}" required></label></div><label>Guests<select name="guests">${[1,2,3,4].map(n => `<option value="${n}">${n} guest${n > 1 ? 's' : ''}</option>`).join('')}</select></label><div class="stay-estimate" aria-live="polite"><span>From / per night</span><strong></strong></div><p class="form-error" role="alert" hidden></p><button class="pill-button" type="submit">Preview my stay ${arrow}</button><p class="demo-note">Demo only. No booking, payment, or personal details are collected.</p></form></div>`);
+    open('stay', `<div class="stay-content"><img class="stay-cover" src="${media(rooms.find(r => r.id === id).image)}" alt=""><p class="eyebrow">A LITTLE SOMETHING TO LOOK FORWARD TO</p><h2 id="modal-title">Make room for quiet.</h2><p class="stay-intro">Imagine your stay. Choose a space and see how it feels.</p><form><label>Your space<select name="room">${rooms.map(r => `<option value="${r.id}">${r.name} — ${money(r.price)} / night</option>`).join('')}</select></label><div class="date-fields"><label>Arrival<input type="date" name="arrival" min="${today}" required></label><label>Departure<input type="date" name="departure" min="${today}" required></label></div><label>Guests<select name="guests">${[1,2,3,4].map(n => `<option value="${n}">${n} guest${n > 1 ? 's' : ''}</option>`).join('')}</select></label><div class="stay-estimate" aria-live="polite"><span>From / per night</span><strong></strong></div><p class="form-error" role="alert" hidden></p><button class="pill-button" type="submit">Preview my stay ${arrow}</button><p class="demo-note">Demo only. No booking, payment, or personal details are collected.</p></form></div>`);
     const form = $('form', dialog);
     form.elements.room.value = id;
     form.elements.guests.value = values.guests || '2';
@@ -110,6 +113,7 @@
     const details = () => ({ room: rooms.find(r => r.id === form.elements.room.value), nights: Math.round((Date.parse(form.elements.departure.value) - Date.parse(form.elements.arrival.value)) / 86400000), guests: Number(form.elements.guests.value), arrival: form.elements.arrival.value, departure: form.elements.departure.value });
     const estimate = () => {
       const d = details();
+      $('.stay-cover', dialog).src = media(d.room.image);
       $('.stay-estimate span', form).textContent = d.nights > 0 ? `${d.nights} night${d.nights > 1 ? 's' : ''} · Estimated total` : 'From / per night';
       $('.stay-estimate strong', form).textContent = money(d.room.price * (d.nights > 0 ? d.nights : 1));
       form.elements.departure.min = d.arrival || today;
@@ -124,14 +128,14 @@
         error.textContent = d.guests > d.room.guests ? `This room welcomes up to ${d.room.guests} guests. Choose a larger room or fewer guests.` : 'Please choose a future arrival and a departure at least one night later.';
         return;
       }
-      open('stay', `<div class="stay-content"><p class="eyebrow">A LITTLE SOMETHING TO LOOK FORWARD TO</p><h2 id="modal-title">Your little escape.</h2><p class="stay-intro">Your stay summary is ready. This is a demo; no reservation has been made.</p><div class="confirmation"><span class="confirmation-sun" aria-hidden="true">✳</span><h3>${d.room.name}</h3><p>${d.arrival} → ${d.departure}</p><p>${d.nights} night${d.nights > 1 ? 's' : ''} · ${d.guests} guest${d.guests > 1 ? 's' : ''}</p><strong>${money(d.room.price * d.nights)}</strong><p>Illustrative total · Breakfast included</p><button class="pill-button">Adjust your stay ↗</button></div></div>`);
+      open('stay', `<div class="stay-content"><img class="stay-cover" src="${media(d.room.image)}" alt=""><p class="eyebrow">A LITTLE SOMETHING TO LOOK FORWARD TO</p><h2 id="modal-title">Your little escape.</h2><p class="stay-intro">Your stay summary is ready. This is a demo; no reservation has been made.</p><div class="confirmation"><span class="confirmation-sun" aria-hidden="true">✳</span><h3>${d.room.name}</h3><p>${d.arrival} → ${d.departure}</p><p>${d.nights} night${d.nights > 1 ? 's' : ''} · ${d.guests} guest${d.guests > 1 ? 's' : ''}</p><strong>${money(d.room.price * d.nights)}</strong><p>Illustrative total · Breakfast included</p><button class="pill-button">Adjust your stay ↗</button></div></div>`);
       $('.pill-button', dialog).onclick = () => showStay(d.room.id, d);
     };
   }
   $$('.stay-link, .closing .pill-button').forEach(b => b.onclick = () => showStay());
   $('.menu-button').onclick = () => {
-    open('menu', `<div class="menu-content"><p class="eyebrow" id="modal-title">MAKE YOURSELF AT HOME</p>${[['01','Our story','#story'],['02','The rooms','#rooms'],['03','Slow living','#rituals']].map(([n,t,h]) => `<a href="${h}"><small>${n}</small>${t}${arrow}</a>`).join('')}<button class="pill-button">Plan your stay ${arrow}</button><p>UBUD, BALI · A SOFTER WAY TO STAY</p></div>`);
-    $$('a', dialog).forEach(a => a.onclick = () => dialog.close());
+    open('menu', `<div class="menu-content"><img class="menu-backdrop" src="${media('garden-pool.jpg')}" alt=""><p class="eyebrow" id="modal-title">MAKE YOURSELF AT HOME</p>${[['00','The arrival','#arrival'],['01','Our story','#story'],['02','The rooms','#rooms'],['03','Slow living','#rituals'],['04','Your escape','#stay']].map(([n,t,h]) => `<a href="${h}"><small>${n}</small>${t}${arrow}</a>`).join('')}<button class="pill-button">Plan your stay ${arrow}</button><p>UBUD, BALI · A SOFTER WAY TO STAY</p></div>`);
+    $$('a', dialog).forEach(a => a.onclick = dismiss);
     $('.pill-button', dialog).onclick = () => showStay();
   };
 })();

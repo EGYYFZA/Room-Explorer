@@ -1,0 +1,17 @@
+/* Scroll entrances use Web Animations, leaving hover and parallax independent. */
+[data-section-motion] .reveal { opacity: 1; transform: none; filter: none; }
+[data-section-motion] .hero .title-line > span,
+[data-section-motion] .hero .title-line > em { transform: none; transition: none; }
+[data-section-motion] .room-card { animation: none; }
+[data-section-motion] .space-hero > img { animation: none; }
+[data-section-motion] [data-motion-state="waiting"]:not([data-motion-kind="photo"]) { opacity: 0; }
+html[data-intro] [data-section-motion] .hero .title-line > :is(span, em) {
+  opacity: 0; transform: translateY(108%);
+}
+html[data-intro] [data-section-motion] .hero .reveal { opacity: 0; }
+.title-line { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  [data-section-motion] .reveal,
+  [data-section-motion] .hero .title-line > :is(span, em) { opacity: 1; transform: none; filter: none; }
+  [data-section-motion] [data-motion-state] { opacity: 1 !important; }
+}

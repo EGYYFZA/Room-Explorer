@@ -1,0 +1,109 @@
+/* The page itself is a native horizontal viewport at every breakpoint. */
+html, body { height: 100%; overflow: hidden; }
+.journey-shell { width: 100vw; height: 100svh; height: 100dvh; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: none; }
+.journey-shell::-webkit-scrollbar { display: none; }
+.journey-sticky { position: relative; top: auto; height: 100%; overflow: visible; }
+.journey-track { position: relative; display: flex; width: max-content; height: 100%; transform: none !important; will-change: auto; }
+.journey-panel { flex: 0 0 100vw; width: 100vw; height: 100svh; height: 100dvh; min-height: 0; }
+.hero-content { min-height: 0; height: 100%; }
+.rooms .room-image { height: clamp(140px, calc(100dvh - 500px), 460px); }
+.room-page { padding: 0; }
+.room-page .room-slide { background: var(--paper); color: var(--ink); overflow: clip; }
+.room-page .space-intro { padding: 0; }
+.room-page .space-hero { height: 100%; min-height: 0; }
+.room-page .space-heading { bottom: 200px; }
+.room-page .photo-button { bottom: 135px; }
+.room-page .space-hero-label { bottom: auto; top: 45px; }
+.room-page .space-facts { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px 6vw; background: #12251bd9; border: 0; color: #f3f0e9a6; z-index: 2; }
+.room-page .space-facts strong { color: var(--paper); }
+.room-page .room-section { padding: 85px 6vw 35px; }
+.room-page .space-story, .room-page .space-amenities, .room-page .space-stay, .room-page .space-notes { align-items: center; }
+.room-page .space-story figure img { height: min(60dvh, 480px); }
+.room-page .space-gallery { flex-basis: auto; width: max-content; background: #e9ecdf; }
+.room-page .space-gallery .space-section-heading { max-width: 88vw; }
+.room-page .photo-mosaic { display: flex; gap: 22px; width: max-content; }
+.room-page .photo-mosaic button { flex: 0 0 34vw; width: 34vw; height: max(180px, calc(100dvh - 340px)); }
+.room-page .photo-mosaic button img, .room-page .photo-mosaic button:first-child img, .room-page .photo-mosaic button:nth-child(4):last-child img { height: 100%; min-height: 0; }
+.room-page .space-gallery > .demo-note { max-width: 88vw; }
+.room-page .space-stay { background: #e3e5da; }
+.room-page .space-booking { min-width: 0; padding: 28px; }
+[data-panel-content] { max-height: calc(100dvh - 110px); overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; }
+.room-page .related-card img { height: min(36dvh, 330px); }
+.room-page .related-spaces .space-section-heading { max-width: 88vw; }
+
+@media (max-width: 899px) {
+  .hero-content { padding-top: 100px; }
+  .story, .rituals { min-height: 0; }
+  .rooms { padding: 90px 6vw 25px; }
+  .rooms .section-heading, .rooms .room-toolbar { max-width: 88vw; }
+  .rooms .section-note { display: none; }
+  .room-page .space-story, .room-page .space-stay { flex-basis: 200vw; width: 200vw; display: grid; grid-template-columns: 88vw 88vw; gap: 12vw; }
+  .room-page .space-story > div, .room-page .stay-editorial { max-width: 75vw; }
+  .room-page .space-booking { width: 88vw; }
+  .room-page .space-amenities, .room-page .space-notes { display: grid; grid-template-columns: 1fr; gap: 25px; align-content: center; }
+  .room-page .space-section-heading { margin-bottom: 25px; }
+  .room-page .space-notes [data-panel-content] { max-height: calc(100dvh - 270px); }
+  .room-page .space-gallery .photo-mosaic button { flex-basis: 74vw; width: 74vw; }
+  .room-page .related-spaces { flex-basis: auto; width: max-content; }
+  .room-page .related-grid { grid-template-columns: repeat(2, 78vw); }
+}
+@media (max-width: 600px) {
+  .hero-content { padding-bottom: 175px; }
+  .story, .rituals, .closing { padding: 90px 6vw 35px; }
+  .rooms { flex-basis: auto; width: max-content; }
+  .rooms .section-heading h2 { font-size: 11vw; }
+  .rooms .room-grid { grid-template-columns: repeat(3, 78vw); gap: 24px; }
+  .rooms .room-image { height: max(140px, calc(100dvh - 480px)); }
+  .rooms .room-title-row h3 { font-size: 29px; }
+  .rooms .empty-state { width: 88vw; }
+  .room-page .room-section { padding: 85px 6vw 30px; }
+  .room-page .space-heading { bottom: 300px; }
+  .room-page .space-facts { padding: 18px 6vw; row-gap: 14px; }
+  .room-page .space-facts strong { font-size: 12px; }
+  .room-page .space-facts > span { font-size: 9px; }
+  .room-page .photo-button { bottom: 145px; }
+  .room-page .space-hero-label { top: 40px; bottom: auto; font-size: 15px; }
+  .room-page .space-description { max-width: 75vw; }
+  .room-page .space-story figure img { height: 62dvh; }
+  .room-page .space-gallery .space-section-heading > p { display: none; }
+  .room-page .photo-mosaic button { height: max(180px, calc(100dvh - 290px)); }
+  .room-page .space-gallery > .demo-note { margin-top: 18px; }
+  .room-page .space-booking { padding: 25px; }
+  .room-page .related-card img { height: min(45dvh, 360px); }
+  .room-page .space-notes summary { padding: 20px 0; }
+  .room-page .space-notes details p { padding-bottom: 18px; }
+}
+@media (max-height: 679px) {
+  .hero-content { padding: 80px 6vw 105px; }
+  .hero h1 { font-size: min(7vw, 12dvh); margin-block: 16px; }
+  .hero-sub p { font-size: 11px; }
+  .hero-next { bottom: 18px; }
+  .gallery-trigger { bottom: 24px; left: auto; right: 6vw; }
+  .story, .rituals, .closing { padding: 60px 6vw 25px; }
+  .story h2, .ritual-content h2, .closing h2 { font-size: min(6vw, 10dvh); margin-block: 15px; }
+  .story-copy p { font-size: 11px; line-height: 1.6; }
+  .story-copy { margin: 12px 0; }
+  .ritual-tabs button { padding-block: 10px; }
+  .ritual-description { font-size: 11px; line-height: 1.5; margin-top: 8px; }
+  .ritual-category { margin-bottom: 5px; }
+  .ritual-title { font-size: 21px; }
+  .rooms { padding-top: 60px; }
+  .rooms .section-heading h2 { font-size: min(5vw, 7dvh); }
+  .rooms .room-toolbar { margin: 15px 0; }
+  .rooms .room-count, .rooms > .demo-note { display: none; }
+  .rooms .room-image { height: max(120px, calc(100dvh - 300px)); }
+  .rooms .room-title-row h3 { font-size: 24px; }
+  .room-page .room-section { padding-top: 60px; padding-bottom: 20px; }
+  .room-page .room-section h2 { font-size: min(4.5vw, 8dvh); }
+  .room-page .space-heading { bottom: 175px; }
+  .room-page .space-heading h1 { font-size: min(8vw, 14dvh); margin-top: 14px; }
+  .room-page .space-heading > p:last-of-type { margin-top: 12px; }
+  .room-page .room-plan-link { margin-top: 5px; padding: 8px 0; }
+  .room-page .space-facts { padding-block: 15px; }
+  .room-page .space-facts strong { margin-bottom: 3px; }
+  .room-page .photo-button { bottom: 90px; left: auto; padding: 11px 20px; }
+  .room-page .space-section-heading { margin-bottom: 20px; }
+  .room-page .photo-mosaic button { height: max(130px, calc(100dvh - 230px)); }
+  .room-page .amenity-list p { padding-block: 12px; }
+  .room-page .space-notes [data-panel-content] { max-height: calc(100dvh - 180px); }
+}

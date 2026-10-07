@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  assetPrefix: './',
+  trailingSlash: true,
   images: { unoptimized: true },
   poweredByHeader: false,
+  devIndicators: false,
 };
 export default nextConfig;
