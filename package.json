@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1",
-    "build": "next build --webpack && node scripts/export-preview.mjs",
+    "build": "next build --webpack && node scripts/export-html.mjs",
     "preview": "node scripts/serve.mjs",
-    "test": "playwright test"
+    "test": "playwright test",
+    "clean": "node scripts/clean.mjs"
   },
   "dependencies": {
     "next": "16.4.0",

@@ -1,10 +1,11 @@
-import './globals.css';
-import './journey.css';
-import './room.css';
-import './horizontal.css';
-import './refinements.css';
-import './polish.css';
-import './motion.css';
+// Keep the cascade ordered: base, pages, layout, transitions, interactions, motion.
+import '../styles/base.css';
+import '../styles/home.css';
+import '../styles/rooms.css';
+import '../styles/horizontal.css';
+import '../styles/transitions.css';
+import '../styles/interactions.css';
+import '../styles/motion.css';
 import PageTransitions from '../components/PageTransitions';
 
 export const metadata = {

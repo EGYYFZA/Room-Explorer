@@ -105,3 +105,9 @@ Build serta 14 pengujian browser berhasil, dilanjutkan tiga pemeriksaan responsi
 Judul hero kini muncul dari bawah per baris dengan jeda bertahap setelah splash selesai, termasuk di ponsel. Observer viewport memulai animasi ketika judul, teks, kartu, fasilitas, formulir, dan foto benar-benar masuk layar. Efek berulang setelah konten keluar dan masuk lagi, sehingga perpindahan kembali ke section tetap terasa hidup. Foto mendapat zoom lembut yang terpisah dari parallax dan hover.
 
 Mesin animasi dipakai bersama oleh Next.js dan HTML langsung. Kartu yang muncul setelah perubahan filter ikut dianimasikan. Fokus keyboard langsung memperlihatkan kontrol, klik mouse tetap stabil, dan reduced motion menampilkan konten tanpa gerakan. Tiga pengujian khusus animasi lulus, mencakup urutan hero setelah splash, seluruh 26 section, filter, fokus, dan perubahan preferensi animasi.
+
+## Audit dan pengelompokan folder
+
+CSS sekarang dikelompokkan di `styles/`, dokumentasi di `docs/`, dan adapter HTML khusus build di `scripts/`. Preview produksi memakai `out/` langsung sehingga tidak menyimpan salinan build kedua. Cache dan hasil pengujian lama dibersihkan; style komponen header, footer, dan bar lama yang sudah dihapus juga dibuang. Semua foto serta HTML yang dapat dibuka langsung tetap diperlukan dan dipertahankan.
+
+Menghapus file perlu memahami hubungan import, class dinamis, dan proses build: file yang tidak dirender langsung masih bisa dibutuhkan sebagai bahan ekspor. Rincian perubahan dan hasil pemeriksaan tersedia di [AUDIT.md](AUDIT.md). Bagian sebelumnya merupakan catatan perkembangan proyek secara bertahap; README menjelaskan struktur dan perilaku terkini.

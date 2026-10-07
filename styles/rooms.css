@@ -1,8 +1,6 @@
 .room-page { padding-top: var(--header-height); padding-bottom: 88px; }
 .room-page [hidden] { display: none !important; }
 .room-page section[id], .room-page #room-stay { scroll-margin-top: calc(var(--header-height) + 20px); }
-.room-header .pill-button { padding: 13px 22px; }
-.back-to-rooms { font-size: 12px; }
 .space-intro { padding: 58px 5vw 0; }
 .space-heading { position: relative; margin-bottom: 40px; }
 .space-heading h1 { font-size: clamp(58px, 8.2vw, 132px); margin-top: 17px; }
@@ -80,15 +78,6 @@
 .related-card .eyebrow { margin-top: 20px; color: var(--muted); }
 .related-card h3 { font-size: 32px; letter-spacing: -1px; margin: 12px 0; }
 .related-card > p:last-child { font-size: 12px; color: var(--muted); }
-.room-footer { background: var(--olive); color: var(--paper); display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 50px 5vw; }
-.room-footer > p { font: italic 20px Georgia, serif; }
-.room-footer > span, .room-footer > a:last-child { font-size: 8px; letter-spacing: 1px; }
-.room-stay-bar { position: fixed; inset: auto 0 0; z-index: 15; display: flex; justify-content: space-between; align-items: center; gap: 15px; background: var(--paper); border-top: 1px solid var(--line); padding: 17px 5vw; }
-.room-stay-bar > div { display: flex; align-items: center; gap: 35px; }
-.room-stay-bar > div > span { font-size: 17px; }
-.room-stay-bar p { font-size: 11px; color: var(--muted); }
-.room-stay-bar strong { color: var(--ink); font-weight: 500; font-size: 15px; }
-.room-stay-bar .pill-button { padding: 13px 22px; }
 .room-lightbox .gallery-photo { min-height: 220px; }
 .room-page { padding-top: 0; padding-bottom: 0; }
 .room-page .space-intro { padding: 0; position: relative; }
@@ -123,7 +112,6 @@
   .space-booking { padding: 25px; }
   .space-booking .date-fields { grid-template-columns: 1fr; gap: 0; }
   .space-booking .stay-estimate { flex-direction: column; align-items: start; }
-  .room-footer { flex-wrap: wrap; }
 }
 @media (max-width: 600px) {
   .room-page .space-heading { bottom: 320px; }
@@ -134,10 +122,6 @@
   .room-page .space-hero-label { top: auto; bottom: 105px; left: 6vw; font-size: 17px; }
   .room-page .photo-button { bottom: 30px; left: 6vw; right: 6vw; }
   .room-page .space-facts { padding: 28px 6vw; }
-  .room-header .pill-button { font-size: 10px; padding: 11px 15px; gap: 12px; }
-  .back-to-rooms { font-size: 10px; }
-  .room-header { padding-inline: 5%; gap: 15px; }
-  .room-header .wordmark { width: 80px; flex-shrink: 0; }
   .space-intro { padding: 35px 6% 0; }
   .space-heading { margin-bottom: 26px; }
   .space-heading h1 { font-size: 15vw; }
@@ -174,20 +158,9 @@
   .related-grid { grid-template-columns: 1fr; gap: 35px; }
   .related-card img { height: 300px; }
   .related-card h3 { font-size: 28px; }
-  .room-footer { padding: 40px 6%; gap: 30px; }
-  .room-footer > p { font-size: 17px; }
-  .room-footer > span { width: 100%; }
-  .room-stay-bar { padding: 13px 6%; }
-  .room-stay-bar > div { display: block; }
-  .room-stay-bar > div > span { font-size: 11px; }
-  .room-stay-bar p { font-size: 9px; margin-top: 6px; }
-  .room-stay-bar strong { font-size: 12px; }
-  .room-stay-bar .pill-button { padding: 12px 18px; gap: 20px; font-size: 10px; }
   .story-photo .story-inset img { height: 110px; }
 }
 @media (max-width: 360px) {
-  .room-header .pill-button { padding: 11px; }
-  .room-header .pill-button > span { display: none; }
   .space-booking .date-fields { grid-template-columns: 1fr; }
   .space-booking .stay-estimate { flex-direction: column; align-items: start; }
 }
