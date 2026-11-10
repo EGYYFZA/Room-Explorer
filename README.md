@@ -1,4 +1,6 @@
-<img src=".github/media/cover.png" alt="Sela House — hospitality interface" width="1280">
+<img src=".github/media/cover.png" alt="Sela House homepage rendered from the repository frontend" width="1280">
+
+<sub>Frontend preview rendered from this repository.</sub>
 
 # Sela House
 
